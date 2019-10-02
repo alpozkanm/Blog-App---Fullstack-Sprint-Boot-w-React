@@ -13,7 +13,8 @@ class InstructorApp extends Component {
                 <Switch>
                     <Route path="/" exact component={ListCoursesComponent} />
                     <Route path="/courses" exact component={ListCoursesComponent} />
-                    {/*  <Route path="/courses/:id" component={CourseComponent} />*/}
+                    <Route path="/courses/:id" component={CourseComponent} />
+
                 </Switch>
 
             </Router>

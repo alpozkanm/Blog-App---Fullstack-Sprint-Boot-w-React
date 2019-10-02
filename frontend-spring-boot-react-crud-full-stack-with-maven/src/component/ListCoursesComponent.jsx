@@ -3,55 +3,56 @@ import CourseDataService from '../service/CourseDataService';
 
 const INSTRUCTOR = 'in28minutes'
 
-class ListCoursesComponent extends Component{
-    constructor(props){
+class ListCoursesComponent extends Component {
+    constructor(props) {
         super(props)
-        this.state={
-            courses:[],
-            message:null
+        this.state = {
+            courses: [],
+            message: null
         }
         this.deleteCourseClicked = this.deleteCourseClicked.bind(this)
         this.updateCourseClicked = this.updateCourseClicked.bind(this)
         this.addCourseClicked = this.addCourseClicked.bind(this)
         this.refreshCourses = this.refreshCourses.bind(this)
-
     }
 
-    ComponentidMount(){
+    componentDidMount() {
         this.refreshCourses();
     }
 
-    refreshCourses(){
-        CourseDataService.retrieveAllCourses(INSTRUCTOR)
-            .then(
-                response =>{
-                    this.setState({courses:response.data})
-                }
-            )
-    }
-
-    deleteCourseClicked(id){
-        CourseDataService.deleteCourse(INSTRUCTOR,id)
+    refreshCourses() {
+        CourseDataService.retrieveAllCourses(INSTRUCTOR)//HARDCODED
         .then(
-                response=>{
-                    this.setState({message:`Delete of course ${id} Successful`})
-                    this.refreshCourses()
+                response => {
+                    //console.log(response);
+                    this.setState({ courses: response.data })
                 }
         )
     }
 
-    addCourseClicked(){
+    deleteCourseClicked(id) {
+        CourseDataService.deleteCourse(INSTRUCTOR, id)
+        .then(
+                response => {
+                    this.setState({ message: `Delete of course ${id} Successful` })
+                    this.refreshCourses()
+                }
+        )
+
+    }
+
+    addCourseClicked() {
         this.props.history.push(`/courses/-1`)
     }
 
-    updateCourseClicked(id){
-        console.log('update'+id);
+    updateCourseClicked(id) {
+        console.log('update ' + id)
         this.props.history.push(`/courses/${id}`)
     }
 
-    render(){
+    render() {
         console.log('render')
-        return(
+        return (
                 <div className="container">
                     <h3>All Courses</h3>
                     {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
@@ -86,7 +87,6 @@ class ListCoursesComponent extends Component{
                 </div>
         )
     }
-
 }
 
 export default ListCoursesComponent
